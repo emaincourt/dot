@@ -18,6 +18,9 @@ func (s *GitSync) Pull() error {
 	}
 
 	if err := w.Pull(&gogit.PullOptions{}); err != nil {
+		if err == gogit.NoErrAlreadyUpToDate {
+			return nil
+		}
 		return err
 	}
 
