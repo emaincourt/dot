@@ -82,17 +82,14 @@ func (c *AESCrypto) Decrypt(filePath string) error {
 		return err
 	}
 
-	nonce := make([]byte, gcm.NonceSize())
-	if _, err = io.ReadFull(rand.Reader, nonce); err != nil {
-		return err
-	}
-
 	data, err := ioutil.ReadFile(filePath)
 	if err != nil {
 		return err
 	}
 
-	decrypted, err := gcm.Open(nonce, nonce, data, nil)
+	nonce, ciphertext := data[:gcm.NonceSize()], data[gcm.NonceSize():]
+
+	plaintext, err := gcm.Open(nil, nonce, ciphertext, nil)
 	if err != nil {
 		return err
 	}
@@ -103,7 +100,7 @@ func (c *AESCrypto) Decrypt(filePath string) error {
 
 	return ioutil.WriteFile(
 		strings.TrimSuffix(filePath, crypto.EncryptedFilesSuffix),
-		decrypted,
+		plaintext,
 		os.ModePerm,
 	)
 }
