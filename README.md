@@ -40,7 +40,7 @@ $ dot set AWS_ACCESS_KEY xxxxxxxxxxxxxxxxxxx
 $ dot set AWS_SECRET_ACCESS_KEY xxxxxxxxxxxxxxxxxxx
 ```
 
-What happens under the hood is that `dot` regenerates a `.dotrc` file everytime you perform any change to your active context. So changes take effect immediately, even when switching workspace.
+What happens under the hood is that `dot` regenerates a `.dotrc` file everytime you perform any change to your active context, which is being sourced everytime you change something. So changes take effect immediately, even when switching workspace.
 
 ## Sync accross multiple devices
 
