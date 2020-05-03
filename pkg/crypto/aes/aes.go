@@ -4,7 +4,6 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
-	"crypto/sha256"
 	"errors"
 	"io"
 	"io/ioutil"
@@ -69,26 +68,34 @@ func (c *AESCrypto) Encrypt(filePath string) (string, error) {
 }
 
 func (c *AESCrypto) Decrypt(filePath string) error {
-	key := sha256.Sum256([]byte(c.secret))
+	if len(c.secret) != KeyLength {
+		return errors.New(ErrKeyLength)
+	}
 
-	block, err := aes.NewCipher(key[:])
+	block, err := aes.NewCipher([]byte(c.secret))
 	if err != nil {
 		return err
 	}
 
-	cipherdata, err := ioutil.ReadFile(filePath)
+	gcm, err := cipher.NewGCM(block)
 	if err != nil {
 		return err
 	}
 
-	iv := make([]byte, aes.BlockSize)
-	if _, err := rand.Read(iv); err != nil {
+	nonce := make([]byte, gcm.NonceSize())
+	if _, err = io.ReadFull(rand.Reader, nonce); err != nil {
 		return err
 	}
 
-	data := make([]byte, len(cipherdata))
-	dec := cipher.NewCBCDecrypter(block, iv)
-	dec.CryptBlocks(data, cipherdata)
+	data, err := ioutil.ReadFile(filePath)
+	if err != nil {
+		return err
+	}
+
+	decrypted, err := gcm.Open(nonce, nonce, data, nil)
+	if err != nil {
+		return err
+	}
 
 	if err := os.Remove(filePath); err != nil {
 		return err
@@ -96,7 +103,7 @@ func (c *AESCrypto) Decrypt(filePath string) error {
 
 	return ioutil.WriteFile(
 		strings.TrimSuffix(filePath, crypto.EncryptedFilesSuffix),
-		data,
+		decrypted,
 		os.ModePerm,
 	)
 }

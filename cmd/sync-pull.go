@@ -48,7 +48,7 @@ var syncPullCmd = &cobra.Command{
 			)
 			if err != nil {
 				log.Errorf(
-					"An error occured while encrypting file %s: %v",
+					"An error occured while decrypting file %s: %v",
 					file,
 					err,
 				)
