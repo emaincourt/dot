@@ -2,11 +2,13 @@ package shrc
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io/ioutil"
 	"os"
 
 	configpkg "github.com/emaincourt/dot/pkg/config"
+	"github.com/mvdan/sh/shell"
 )
 
 type ShRCGenerator struct {
@@ -31,12 +33,12 @@ const (
 const (
 	fileHeaderSources = `
 ########################################
-				Sources
+##				Sources				  ##
 ########################################
 `
 	fileHeaderEnvs = `
 ########################################
-				Envs
+##				Envs				  ##
 ########################################
 `
 )
@@ -67,9 +69,17 @@ func (g *ShRCGenerator) Regenerate(filePath string) error {
 		}
 	}
 
-	return ioutil.WriteFile(
+	if err := ioutil.WriteFile(
 		filePath,
 		buffer.Bytes(),
 		defaulFileMode,
-	)
+	); err != nil {
+		return err
+	}
+
+	if _, err := shell.SourceFile(context.Background(), filePath); err != nil {
+		return err
+	}
+
+	return nil
 }

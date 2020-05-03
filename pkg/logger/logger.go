@@ -4,7 +4,7 @@ type LogLevel = int
 
 type LogLevelName = string
 
-const DefaultLogLevel = "info"
+const DefaultLogLevel = "warn"
 
 const (
 	LogLevelNameDebug LogLevelName = "debug"

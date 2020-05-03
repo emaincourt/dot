@@ -14,6 +14,7 @@ require (
 	github.com/mholt/archiver/v3 v3.3.0
 	github.com/miscreant/miscreant.go v0.0.0-20200214223636-26d376326b75 // indirect
 	github.com/mitchellh/mapstructure v1.3.0 // indirect
+	github.com/mvdan/sh v2.6.4+incompatible
 	github.com/nwaples/rardecode v1.1.0 // indirect
 	github.com/olekukonko/tablewriter v0.0.4
 	github.com/ovh/configstore v0.3.2 // indirect
@@ -32,4 +33,5 @@ require (
 	golang.org/x/sys v0.0.0-20200501145240-bc7a7d42d5c3 // indirect
 	gopkg.in/ini.v1 v1.55.0 // indirect
 	gopkg.in/src-d/go-git.v4 v4.13.1 // indirect
+	mvdan.cc/sh v2.6.4+incompatible // indirect
 )
