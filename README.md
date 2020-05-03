@@ -44,9 +44,9 @@ What happens under the hood is that `dot` regenerates a `.dotrc` file everytime 
 
 ## Sync accross multiple devices
 
-`dotfiles` help a lot when it comes to synchronizing information accross multiple devices. A lot of people work with multiple machines ans to their best to keep things synced.
+`dotfiles` help a lot when it comes to synchronizing information accross multiple devices. A lot of people work with multiple machines and do their best to keep things synced.
 
-`dot` also aims to address this kind of concerns. Indeed, `dot` exposes a `sync` interface which allows you to:
+`dot` aims to address this kind of concerns by exposing a sync interface that allows you to:
 * attach remote state stores
 * sync your configuration accross all your devices, encrypted
 
