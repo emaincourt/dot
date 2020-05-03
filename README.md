@@ -79,6 +79,12 @@ Then, run the following command to initialize `dot`:
 $ dot init
 ```
 
+For changes to be binded to your actual environment, note that you need to add the following to your `.zshrc`, `bashrc` or whatever rc file:
+
+```sh
+source ~/.dot/.dotrc
+```
+
 For more information about initialization options, run:
 
 ```
